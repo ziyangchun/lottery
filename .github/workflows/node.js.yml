@@ -26,9 +26,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: 'server/package-lock.json'
     - run: npm install
-    - run: cd ../product
+      working-directory: ./server
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@master
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
     - run: npm install
+      working-directory: ./product
     - run: npm run build
     - run: npm run serve
